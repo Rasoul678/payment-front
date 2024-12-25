@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, useParams } from "react-router";
-import { AppRoutes } from "../../../constants";
+import { AppRoutePaths } from "../../../constants";
 
 type IProps = {};
 type DetailsParams = {
@@ -12,7 +12,7 @@ const PaymentDetails: React.FC<IProps> = () => {
   const numericID = Number(id);
 
   if (isNaN(numericID)) {
-    return <Navigate to={AppRoutes.NOT_FOUND} replace={false} />;
+    return <Navigate to={AppRoutePaths.NOT_FOUND} replace={false} />;
   }
 
   return <h1>Payment Details: {numericID}</h1>;

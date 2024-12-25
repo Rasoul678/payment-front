@@ -1,13 +1,13 @@
 import { CSSProperties } from "react";
 import { NavLink, Outlet } from "react-router";
-import { AppRoutes } from "../constants";
+import { AppRoutePaths } from "../constants";
 
-const Layout = () => {
+const AppLayout = () => {
   return (
     <main>
       <nav style={styles}>
-        <NavLink to={AppRoutes.HOME}>home</NavLink>
-        <NavLink to={AppRoutes.PAYMENTS}>payments</NavLink>
+        <NavLink to={AppRoutePaths.BASE}>home</NavLink>
+        <NavLink to={AppRoutePaths.PAYMENTS}>payments</NavLink>
       </nav>
       <Outlet />
     </main>
@@ -31,4 +31,4 @@ const styles = {
   textTransform: "uppercase",
 } as CSSProperties;
 
-export default Layout;
+export default AppLayout;
