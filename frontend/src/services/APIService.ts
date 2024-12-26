@@ -1,17 +1,14 @@
 import { API_URL } from "@/constants";
-import { APIResponseType, PaymentRType, PaymentsListRType } from "@/types";
+import {
+  APIResponseType,
+  PaymentRType,
+  PaymentsListRType,
+  QueryParams,
+} from "@/types";
 import axios from "axios";
 
-type IParams = {
-  search?: string;
-  type?: string;
-  status?: string;
-  page?: number;
-  limit?: number;
-};
-
 class APIService {
-  static async fetchPayments(params: IParams): Promise<APIResponseType> {
+  static async fetchPayments(params: QueryParams): Promise<APIResponseType> {
     try {
       const { data: result, status } = await axios.get<PaymentsListRType>(
         `${API_URL}/payments`,

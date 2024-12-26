@@ -33,3 +33,17 @@ export type APIResponseType = {
   error: string | null;
   status: number;
 };
+
+export type QueryParams = {
+  search?: string;
+  type?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+};
+
+export type PaymentsStateType = {
+  query: QueryParams;
+  payments: PaymentsListRType | null;
+  error: string | null;
+};
