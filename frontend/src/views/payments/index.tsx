@@ -1,3 +1,4 @@
+import PaginationDemo from "@/components/Pagination";
 import APIService from "@/services/APIService";
 import { APIResponseType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
@@ -19,6 +20,7 @@ const PaymentList: React.FC<IProps> = () => {
   return (
     <section>
       <h1>All Payments</h1>
+      <PaginationDemo />
     </section>
   );
 };
