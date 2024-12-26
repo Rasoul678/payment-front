@@ -1,4 +1,20 @@
-export enum PaymentVarietyType {
+export type PaymentsListRType = {
+  entities: PaymentRType[];
+  total: number;
+  page: number;
+  limit: number;
+};
+
+export type PaymentRType = {
+  id: string;
+  type: PayVarietyType;
+  value: number;
+  paid_at: string;
+  status: PayStatusType;
+  description: string | null;
+};
+
+export enum PayVarietyType {
   SALARY = "salary",
   BONUS = "bonus",
   COMMISSION = "commission",
@@ -6,24 +22,14 @@ export enum PaymentVarietyType {
   OVERTIME = "overtime",
 }
 
-export enum PaymentStatusType {
+export enum PayStatusType {
   SUCCESS = "success",
   PENDING = "pending",
   FAILED = "failed",
 }
 
-export type PaymentsResponseType = {
-  entities: Entity[];
-  total: number;
-  page: number;
-  limit: number;
-};
-
-export type Entity = {
-  id: string;
-  type: PaymentVarietyType;
-  value: number;
-  paid_at: string;
-  status: PaymentStatusType;
-  description: string | null;
+export type APIResponseType = {
+  result: PaymentsListRType | PaymentRType | null;
+  error: string | null;
+  status: number;
 };

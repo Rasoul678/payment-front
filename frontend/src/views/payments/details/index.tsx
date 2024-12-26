@@ -1,6 +1,6 @@
+import { AppRoutePaths } from "@/constants";
 import React from "react";
 import { Navigate, useParams } from "react-router";
-import { AppRoutePaths } from "../../../constants";
 
 type IProps = {};
 type DetailsParams = {

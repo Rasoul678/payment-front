@@ -1,6 +1,6 @@
+import { AppRoutePaths } from "@/constants";
 import { CSSProperties } from "react";
 import { NavLink, Outlet } from "react-router";
-import { AppRoutePaths } from "../constants";
 
 const AppLayout = () => {
   return (
