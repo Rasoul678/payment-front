@@ -67,6 +67,19 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2.5em;
   line-height: 1.1;
+}
+
+.loader {
+  @apply border-4 border-[#F3F3F3] border-t-[#3498db] rounded-full animate-spin w-10 h-10 m-auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

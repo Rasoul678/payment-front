@@ -4,7 +4,7 @@ import { NavLink, Outlet } from "react-router";
 
 const AppLayout = () => {
   return (
-    <main>
+    <main className="mt-8">
       <nav style={styles}>
         <NavLink to={AppRoutePaths.BASE}>home</NavLink>
         <NavLink to={AppRoutePaths.PAYMENTS}>payments</NavLink>

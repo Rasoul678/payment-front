@@ -6,7 +6,7 @@ import {
   SetQueryAction,
 } from "./actions";
 
-export const setQuery = (query: QueryParams): SetQueryAction => {
+export const setQueryParams = (query: QueryParams): SetQueryAction => {
   return { type: ActionType.SET_QUERY, payload: query };
 };
 

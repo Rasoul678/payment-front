@@ -28,8 +28,8 @@ export enum PayStatusType {
   FAILED = "failed",
 }
 
-export type APIResponseType = {
-  result: PaymentsListRType | PaymentRType | null;
+export type APIResType<T> = {
+  result: T | null;
   error: string | null;
   status: number;
 };

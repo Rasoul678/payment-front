@@ -1,6 +1,6 @@
 import { API_URL } from "@/constants";
 import {
-  APIResponseType,
+  APIResType,
   PaymentRType,
   PaymentsListRType,
   QueryParams,
@@ -8,7 +8,9 @@ import {
 import axios from "axios";
 
 class APIService {
-  static async fetchPayments(params: QueryParams): Promise<APIResponseType> {
+  static async fetchPayments(
+    params: QueryParams
+  ): Promise<APIResType<PaymentsListRType>> {
     try {
       const { data: result, status } = await axios.get<PaymentsListRType>(
         `${API_URL}/payments`,
@@ -27,7 +29,7 @@ class APIService {
     }
   }
 
-  static async fetchPaymentById(id: string): Promise<APIResponseType> {
+  static async fetchPaymentById(id: string): Promise<APIResType<PaymentRType>> {
     try {
       const { data: result, status } = await axios.get<PaymentRType>(
         `${API_URL}/payments/${id}`
