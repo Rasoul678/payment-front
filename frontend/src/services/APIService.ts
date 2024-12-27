@@ -1,47 +1,49 @@
 import { API_URL } from "@/constants";
-import {
-  APIResType,
-  PaymentRType,
-  PaymentsListRType,
-  QueryParams,
-} from "@/types";
-import axios from "axios";
+import { APIResType, QueryParams } from "@/types";
+import axios, { AxiosError } from "axios";
+
+type ReturnType<T> = Promise<APIResType<T>>;
 
 class APIService {
-  static async fetchPayments(
-    params: QueryParams
-  ): Promise<APIResType<PaymentsListRType>> {
+  static async fetchPayments<R>(params: Partial<QueryParams>): ReturnType<R> {
+    const url = `${API_URL}/payments`;
+
     try {
-      const { data: result, status } = await axios.get<PaymentsListRType>(
-        `${API_URL}/payments`,
-        {
-          params,
-        }
-      );
+      const { data: result, status } = await axios.get<R>(url, {
+        params,
+      });
 
       return { result, error: null, status };
-    } catch (error: any) {
-      return {
-        result: null,
-        ...error.response.data,
-        status: error.response.status,
-      };
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return {
+          result: null,
+          ...error.response?.data,
+          status: error.response?.status,
+        };
+      } else {
+        throw Error("Something went wrong!");
+      }
     }
   }
 
-  static async fetchPaymentById(id: string): Promise<APIResType<PaymentRType>> {
+  static async fetchPaymentById<T>(id: string): ReturnType<T> {
+    const url = `${API_URL}/payments/${id}`;
+
     try {
-      const { data: result, status } = await axios.get<PaymentRType>(
-        `${API_URL}/payments/${id}`
-      );
+      const { data: result, status } = await axios.get<T>(url);
 
       return { result, error: null, status };
-    } catch (error: any) {
-      return {
-        result: null,
-        ...error.response.data,
-        status: error.response.status,
-      };
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return {
+          result: null,
+          ...error.response?.data,
+          status: error.response?.status,
+        };
+      } else {
+        throw Error("Something went wrong!");
+      }
     }
   }
 }

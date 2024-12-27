@@ -1,6 +1,4 @@
 import { PaymentsStateType } from "@/types";
-import { persistReducer } from "redux-persist";
-import storageSession from "redux-persist/lib/storage/session";
 import { Action, ActionType } from "../actions/actions";
 
 const initialState: PaymentsStateType = {
@@ -11,7 +9,7 @@ const initialState: PaymentsStateType = {
     type: "",
     status: "",
     page: 1,
-    limit: 5,
+    limit: 10,
   },
 };
 const paymentsReducer = (state = initialState, action: Action) => {
@@ -27,14 +25,4 @@ const paymentsReducer = (state = initialState, action: Action) => {
   }
 };
 
-const paymentsPersistConfig = {
-  key: "payments",
-  storage: storageSession,
-};
-
-const persistedPaymentsReducer = persistReducer(
-  paymentsPersistConfig,
-  paymentsReducer
-);
-
-export default persistedPaymentsReducer;
+export default paymentsReducer;

@@ -35,15 +35,15 @@ export type APIResType<T> = {
 };
 
 export type QueryParams = {
-  search?: string;
-  type?: string;
-  status?: string;
-  page?: number;
-  limit?: number;
+  search: string;
+  type: string;
+  status: string;
+  page: number;
+  limit: number;
 };
 
 export type PaymentsStateType = {
-  query: QueryParams;
+  query: Partial<QueryParams>;
   payments: PaymentsListRType | null;
   error: string | null;
 };
