@@ -1,4 +1,4 @@
-import useQueryChangeHandle from "@/hooks/useQueryChangeHandle";
+import { useQueryChangeHandle } from "@/hooks";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { ReactNode } from "react";
 import SelectPerPage from "./SelectPerPage";

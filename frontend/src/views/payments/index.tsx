@@ -8,22 +8,16 @@ import {
   CardTitle,
 } from "@/components/shadcn-ui/card";
 import Spinner from "@/components/Spinner";
-import useActions from "@/hooks/useActions";
-import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { usePersistQueryParams, useTypedSelector } from "@/hooks";
 import APIService from "@/services/APIService";
 import { APIResType, PaymentsListRType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { useLocation, useSearchParams } from "react-router";
 
 type IProps = {};
 type PaymentsQueryType = APIResType<PaymentsListRType>;
 
 const PaymentList: React.FC<IProps> = () => {
-  const { setQueryParams } = useActions();
-  const location = useLocation();
-  const [_, setSearchParams] = useSearchParams();
-
   const {
     query: { limit, page, search, type, status },
   } = useTypedSelector((state) => state.payments);
@@ -46,41 +40,12 @@ const PaymentList: React.FC<IProps> = () => {
   const err = data?.error;
   const totalCount = data?.result?.total!;
 
-  React.useEffect(() => {
-    const urlQuery = new URLSearchParams(location.search);
-
-    let limit = parseInt(urlQuery.get("limit") || "10", 10);
-    const validPageLimitOptions = [5, 10, 15];
-
-    if (!validPageLimitOptions.includes(limit)) {
-      limit = 10;
-      urlQuery.set("limit", limit.toString());
-      setSearchParams(urlQuery);
-    }
-
-    let page = parseInt(urlQuery.get("page") || "1", 10);
-
-    if (totalCount > 0 && page * limit > totalCount + limit) {
-      page = 1;
-      urlQuery.set("page", page.toString());
-      setSearchParams(urlQuery);
-    }
-
-    const initialQuery = {
-      search: urlQuery.get("search") || "",
-      type: urlQuery.get("type") || "",
-      status: urlQuery.get("status") || "",
-      page,
-      limit,
-    };
-
-    setQueryParams(initialQuery);
-  }, [location.search]);
+  usePersistQueryParams(totalCount);
 
   return (
     <section className="w-[calc(100vw-10rem)]">
       <div className="flex justify-between items-center">
-        <h1>Payments List</h1>
+        <h1 className="w-[25rem]">Payments List</h1>
         <SearchBar />
       </div>
       <div className="flex flex-col justify-between min-h-[calc(100vh-11rem)]">
