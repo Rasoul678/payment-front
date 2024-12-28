@@ -85,63 +85,64 @@ const SearchBar: React.FC<IProps> = () => {
   };
 
   return (
-    <div className="flex w-full items-center justify-end gap-2">
+    <div className="flex flex-col sm:flex-row w-full items-center justify-end gap-2 bg-background">
       <Input
         type="text"
         value={query.search}
         onChange={handleSearch}
         placeholder="Search by description"
-        className="w-[25rem]"
+        className="flex-1 w-full sm:w-auto min-w-sm"
       />
-
-      <Select value={query.type} onValueChange={handleTypeChange}>
-        <SelectTrigger className="capitalize w-[10rem]">
-          <SelectValue placeholder="All Types">{query.type}</SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem className="capitalize" value="*">
-            All Types
-          </SelectItem>
-          {typeOptions.map((option) => (
-            <SelectItem
-              className="capitalize"
-              key={option}
-              value={String(option)}
-            >
-              {option}
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <Select value={query.type} onValueChange={handleTypeChange}>
+          <SelectTrigger className="capitalize w-full sm:w-[10rem]">
+            <SelectValue placeholder="All Types">{query.type}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem className="capitalize" value="*">
+              All Types
             </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      <Select value={query.status} onValueChange={handleStatusChange}>
-        <SelectTrigger className="capitalize w-[10rem]">
-          <SelectValue placeholder="All Statuses">{query.status}</SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem className="capitalize" value="*">
-            All Statuses
-          </SelectItem>
-          {statusOptions.map((option) => {
-            let color = "green";
-            if (option === PayStatusType.FAILED) {
-              color = "red";
-            } else if (option === PayStatusType.PENDING) {
-              color = "yellow";
-            }
-
-            return (
+            {typeOptions.map((option) => (
               <SelectItem
-                className={`capitalize text-${color}-400`}
+                className="capitalize"
                 key={option}
                 value={String(option)}
               >
                 {option}
               </SelectItem>
-            );
-          })}
-        </SelectContent>
-      </Select>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select value={query.status} onValueChange={handleStatusChange}>
+          <SelectTrigger className="capitalize w-full sm:w-[10rem]">
+            <SelectValue placeholder="All Statuses">{query.status}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem className="capitalize" value="*">
+              All Statuses
+            </SelectItem>
+            {statusOptions.map((option) => {
+              let color = "text-green-400";
+              if (option === PayStatusType.FAILED) {
+                color = "text-red-500";
+              } else if (option === PayStatusType.PENDING) {
+                color = "text-yellow-400";
+              }
+
+              return (
+                <SelectItem
+                  className={`capitalize ${color}`}
+                  key={option}
+                  value={String(option)}
+                >
+                  {option}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 };
