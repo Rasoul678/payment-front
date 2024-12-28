@@ -36,6 +36,11 @@ git clone https://github.com/Rasoul678/toman-front.git
 
 ```bash
 cd toman-front/frontend
+```
+
+then:
+
+```bash
 npm install
 ```
 
@@ -53,21 +58,24 @@ npm run start-app
 
 ## Available Scripts
 
-- `npm run dev` - Start development server individually
+- `npm run dev` - Start frontend server individually
 - `npm run server` - Start backend server individually
-- `npm run start-app` - Start both servers conurrently
+- `npm run start-app` - Start both servers concurrently
 - `npm run build` - Build for production
 - `npm run lint` - Run ESLint
 - `npm run test` - Run tests
 
-frontend/
-├── src/
-│ ├── components/ # Reusable UI components
-│ ├── store/ # Redux store, actions, and reducers
-│ ├── services/ # API service layer
-│ ├── hooks/ # Custom React hooks
-│ ├── views/ # Page components
-│ ├── types/ # TypeScript type definitions
-│ ├── lib/ # Utility functions
-│ └── constants/ # Application constants
-└── public/ # Static assets
+## Project Structure
+
+#### frontend/
+
+- ├── src/
+- │ ├── components/ `# Reusable UI components`
+- │ ├── store/ `# Redux store, actions, and reducers`
+- │ ├── services/ `# API service layer`
+- │ ├── hooks/ `# Custom React hooks`
+- │ ├── views/ `# Page components`
+- │ ├── types/ `# TypeScript type definitions`
+- │ ├── lib/ `# Utility functions`
+- │ └── constants/ `# Application constants`
+- └── public/ `# Static assets`

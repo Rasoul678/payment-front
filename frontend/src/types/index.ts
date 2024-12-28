@@ -43,7 +43,7 @@ export type QueryParams = {
 };
 
 export type PaymentsStateType = {
-  query: Partial<QueryParams>;
+  query: QueryParams;
   payments: PaymentsListRType | null;
   error: string | null;
 };

@@ -17,21 +17,41 @@ type IProps = {};
 const SearchBar: React.FC<IProps> = () => {
   const { query } = useTypedSelector((state) => state.payments);
   const setQueryItem = useQueryChangeHandle();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  let timeout: ReturnType<typeof setTimeout>;
 
   /**
    * Handles changes to the search input in the search bar.
    *
-   * Trims and converts the search input to lowercase, then updates the `page` and `search` query parameters.
-   * This ensures the search results start from the beginning and the search query is updated.
+   * When the user types in the search input, this function is called.
+   * It trims the input value, updates the input ref with the trimmed value, and sets a timeout to update the `search` query parameter after 500ms of inactivity.
+   * This allows for a smoother search experience by not making a request on every keystroke.
    *
    * @param e - The React change event for the search input.
    */
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const search = e.target.value.trim().toLowerCase();
+    const search = e.target.value;
 
-    setQueryItem("page", "1");
-    setQueryItem("search", search);
+    if (inputRef.current) {
+      inputRef.current.value = search;
+    }
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      setQueryItem("page", "1");
+      setQueryItem("search", search);
+    }, 500);
   };
+
+  React.useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = query.search;
+    }
+
+    return () => clearTimeout(timeout);
+  }, [query.search]);
 
   /**
    * Handles changes to the type filter in the search bar.
@@ -75,14 +95,14 @@ const SearchBar: React.FC<IProps> = () => {
     <div className="flex flex-col sm:flex-row w-full items-center justify-end gap-2 bg-background">
       <Input
         type="text"
-        value={query.search}
+        ref={inputRef}
         onChange={handleSearch}
         placeholder="Search by description"
-        className="flex-1 w-full sm:w-auto min-w-sm"
+        className="flex-1 w-full sm:w-auto min-w-sm border border-white"
       />
       <div className="flex items-center gap-2 w-full sm:w-auto">
         <Select value={query.type} onValueChange={handleTypeChange}>
-          <SelectTrigger className="capitalize w-full sm:w-[10rem]">
+          <SelectTrigger className="capitalize w-full sm:w-[10rem] border border-white">
             <SelectValue placeholder="All Types">{query.type}</SelectValue>
           </SelectTrigger>
           <SelectContent>
@@ -102,7 +122,7 @@ const SearchBar: React.FC<IProps> = () => {
         </Select>
 
         <Select value={query.status} onValueChange={handleStatusChange}>
-          <SelectTrigger className="capitalize w-full sm:w-[10rem]">
+          <SelectTrigger className="capitalize w-full sm:w-[10rem] border border-white">
             <SelectValue placeholder="All Statuses">{query.status}</SelectValue>
           </SelectTrigger>
           <SelectContent>

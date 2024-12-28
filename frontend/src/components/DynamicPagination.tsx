@@ -1,3 +1,4 @@
+import { validPageLimitOptions } from "@/constants";
 import { useQueryChangeHandle } from "@/hooks";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { ReactNode } from "react";
@@ -45,6 +46,7 @@ const DynamicPagination: React.FC<IProps> = ({ totalCount }) => {
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
+              className="rounded-full"
               onClick={() => handlePageChange(i)}
               isActive={query.page === i}
             >
@@ -57,6 +59,7 @@ const DynamicPagination: React.FC<IProps> = ({ totalCount }) => {
       items.push(
         <PaginationItem key={1}>
           <PaginationLink
+            className="rounded-full"
             onClick={() => handlePageChange(1)}
             isActive={query.page === 1}
           >
@@ -80,6 +83,7 @@ const DynamicPagination: React.FC<IProps> = ({ totalCount }) => {
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
+              className="rounded-full"
               onClick={() => handlePageChange(i)}
               isActive={query.page === i}
             >
@@ -89,7 +93,7 @@ const DynamicPagination: React.FC<IProps> = ({ totalCount }) => {
         );
       }
 
-      if (query.limit! < totalPageCount - 2) {
+      if (query.page! < totalPageCount - 2) {
         items.push(
           <PaginationItem key="ellipsis-end">
             <PaginationEllipsis />
@@ -102,6 +106,7 @@ const DynamicPagination: React.FC<IProps> = ({ totalCount }) => {
           items.push(
             <PaginationItem key={totalPageCount}>
               <PaginationLink
+                className="rounded-full"
                 onClick={() => handlePageChange(totalPageCount)}
                 isActive={query.page === totalPageCount}
               >
@@ -119,9 +124,10 @@ const DynamicPagination: React.FC<IProps> = ({ totalCount }) => {
     <div className="flex flex-col-reverse md:flex-row items-center w-full">
       <div className="flex flex-col gap-4 flex-1">
         <SelectPerPage
-          options={[5, 10, 15]}
+          options={validPageLimitOptions}
           pageSize={query.limit!}
           setPageSize={handlePageSizeChange}
+          totalCount={totalCount}
         />
       </div>
 

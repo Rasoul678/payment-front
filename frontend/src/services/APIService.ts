@@ -5,7 +5,7 @@ import axios, { AxiosError } from "axios";
 type ReturnType<T> = Promise<APIResType<T>>;
 
 class APIService {
-  static async fetchPayments<R>(params: Partial<QueryParams>): ReturnType<R> {
+  static async fetchPayments<R>(params: QueryParams): ReturnType<R> {
     const url = `${API_URL}/payments`;
 
     try {

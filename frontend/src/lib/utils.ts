@@ -45,19 +45,3 @@ export const formatCurrency = (value: number) => {
     currency: "USD",
   }).format(value);
 };
-
-/**
- * Determines the appropriate CSS class name for a given status and type.
- *
- * This function takes a status string and a type string ("text", "border", or "bg") and
- * returns the corresponding Tailwind CSS class name for the specified status and type.
- *
- * @param status - The status to be used for determining the class name.
- * @param type - The type of class name to be returned ("text", "border", or "bg").
- * @returns The Tailwind CSS class name for the specified status and type.
- */
-export const getColor = (status: string, type: "text" | "border" | "bg") => {
-  if (status === "failed") return `${type}-red-500`;
-  if (status === "pending") return `${type}-yellow-500`;
-  return `${type}-teal-500`;
-};

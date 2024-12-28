@@ -11,16 +11,18 @@ type IProps = {
   options: number[];
   setPageSize: (newSize: number) => void;
   pageSize: number;
+  totalCount: number;
 };
 
 const SelectPerPage: React.FC<IProps> = ({
   options,
   pageSize,
   setPageSize,
+  totalCount,
 }) => {
   return (
     <div className="flex flex-row-reverse items-center gap-2">
-      <span className="whitespace-nowrap text-sm">items per page</span>
+      <span className="whitespace-nowrap text-sm">items of {totalCount}</span>
 
       <Select
         value={String(pageSize)}

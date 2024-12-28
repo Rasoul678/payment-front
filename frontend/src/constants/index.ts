@@ -22,3 +22,5 @@ export const statusOptions: PayStatusType[] = [
   PayStatusType.SUCCESS,
   PayStatusType.PENDING,
 ];
+
+export const validPageLimitOptions = [10, 15, 20];

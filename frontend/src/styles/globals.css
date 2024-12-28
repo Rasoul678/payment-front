@@ -83,3 +83,39 @@ h1 {
     transform: rotate(360deg);
   }
 }
+
+.pending[data-effect="bg"] {
+  @apply bg-yellow-500;
+}
+
+.success[data-effect="bg"] {
+  @apply bg-cyan-500;
+}
+
+.failed[data-effect="bg"] {
+  @apply bg-red-500;
+}
+
+.pending[data-effect="text"] {
+  @apply text-yellow-500 fill-yellow-500;
+}
+
+.success[data-effect="text"] {
+  @apply text-cyan-500 fill-cyan-400;
+}
+
+.failed[data-effect="text"] {
+  @apply text-red-500 fill-red-500;
+}
+
+.pending[data-effect="border"] {
+  @apply border border-yellow-500;
+}
+
+.success[data-effect="border"] {
+  @apply border border-cyan-500;
+}
+
+.failed[data-effect="border"] {
+  @apply border border-red-500;
+}

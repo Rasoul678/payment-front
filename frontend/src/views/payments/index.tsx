@@ -10,31 +10,41 @@ import {
 } from "@/components/shadcn-ui/card";
 import Spinner from "@/components/Spinner";
 import { usePersistQueryParams, useTypedSelector } from "@/hooks";
-import { formatCurrency, formatDate, getColor } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import APIService from "@/services/APIService";
 import { APIResType, PaymentsListRType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import { BadgeIcon, CalendarIcon } from "lucide-react";
 import React from "react";
 import { NavLink } from "react-router";
 
 type IProps = {};
 type PaymentsQueryType = APIResType<PaymentsListRType>;
 
+const getHighlightedText = (text: string, highlight: string) => {
+  // Split text on highlight term, include term itself into parts, ignore case
+  const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+  return (
+    <span>
+      {parts.map((part, i) =>
+        part.toLowerCase() === highlight.toLowerCase() ? (
+          <b className="text-[gold]" key={part + i}>
+            {part}
+          </b>
+        ) : (
+          part
+        )
+      )}
+    </span>
+  );
+};
+
 const PaymentList: React.FC<IProps> = () => {
-  const {
-    query: { limit, page, search, type, status },
-  } = useTypedSelector((state) => state.payments);
+  const { query } = useTypedSelector((state) => state.payments);
 
   const { data, isLoading, isFetching, refetch } = useQuery<PaymentsQueryType>({
-    queryKey: ["payments", page, limit, search, type, status],
-    queryFn: () =>
-      APIService.fetchPayments<PaymentsListRType>({
-        page,
-        limit,
-        search,
-        type,
-        status,
-      }),
+    queryKey: ["payments", ...Object.values(query)],
+    queryFn: () => APIService.fetchPayments<PaymentsListRType>(query),
     refetchOnWindowFocus: false,
     retry: false,
   });
@@ -48,16 +58,16 @@ const PaymentList: React.FC<IProps> = () => {
   return (
     <section>
       <div className="flex sticky top-[3rem] z-10 justify-between items-center bg-background">
-        <h1 className="w-[25rem] hidden lg:block">Payments List</h1>
+        <h1 className="w-[25rem] text-left hidden lg:block">Payments List</h1>
         <SearchBar />
       </div>
       <div className="flex flex-col justify-between min-h-[calc(100vh-11rem)]">
         {(isLoading || isFetching) && <Spinner />}
         {err && !isFetching && (
-          <div>
+          <div className="flex-1 flex flex-col items-center justify-center gap-2 h-full">
             <h2>{err}</h2>
             <Button variant="destructive" onClick={() => refetch()}>
-              refresh
+              reload
             </Button>
           </div>
         )}
@@ -65,19 +75,19 @@ const PaymentList: React.FC<IProps> = () => {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-center content-start gap-4 mt-2 mb-[1rem]">
               {payments?.map((pay) => {
-                const color = getColor(pay.status, "bg");
                 return (
                   <Card className="w-auto h-[10rem]" key={pay.id}>
                     <NavLink to={`/payments/${pay.id}`}>
                       <CardHeader className="p-3 text-justify border-0 border-b-2">
                         <CardTitle>
                           <div className="relative inline-flex">
-                            <span className="capitalize ml-3">
+                            <BadgeIcon
+                              data-effect="text"
+                              className={`h-3 w-3 ${pay.status}`}
+                            />
+                            <span className="capitalize ml-2">
                               {pay.status}
                             </span>
-                            <span
-                              className={`absolute top-2 -left-1 grid min-h-[0.5rem] min-w-[0.5rem] translate-x-2/4 -translate-y-2/4 place-items-center rounded-full ${color} py-1 px-1 text-xs text-white`}
-                            ></span>
                           </div>
                         </CardTitle>
                         <CardTitle className="capitalize">
@@ -88,10 +98,15 @@ const PaymentList: React.FC<IProps> = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="p-3 text-left h-[2.5rem] truncate italic">
-                        {pay.description || '"No description provided"'}
+                        {pay.description
+                          ? query.search
+                            ? getHighlightedText(pay.description, query.search)
+                            : pay.description
+                          : '"No description provided"'}
                       </CardContent>
-                      <CardFooter className="p-1 justify-center text-sm opacity-80">
-                        🗓️ {formatDate(pay.paid_at)}
+                      <CardFooter className="p-1 justify-center text-sm opacity-70">
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {formatDate(pay.paid_at)}
                       </CardFooter>
                     </NavLink>
                   </Card>

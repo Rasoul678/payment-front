@@ -10,7 +10,7 @@ import {
 } from "@/components/shadcn-ui/card";
 import Spinner from "@/components/Spinner";
 import { AppRoutePaths } from "@/constants";
-import { formatCurrency, formatDate, getColor } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import APIService from "@/services/APIService";
 import { APIResType, PaymentRType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
@@ -37,9 +37,6 @@ const PaymentDetails: React.FC<IProps> = () => {
   const status = data?.status;
   const payment = data?.result;
 
-  let borderColor = getColor(payment?.status!, "border");
-  let textColor = getColor(payment?.status!, "text");
-
   if (isLoading || isFetching) return <Spinner />;
 
   if (error && status === 404) {
@@ -59,16 +56,20 @@ const PaymentDetails: React.FC<IProps> = () => {
 
   return (
     <Card
-      className={`min-h-[calc(100vh-11rem)] w-[100%] sm:w-[80%] md:w-[60%] m-auto border ${borderColor}`}
+      data-effect="border"
+      className={`min-h-[calc(100vh-11rem)] w-[100%] sm:w-[80%] md:w-[60%] m-auto ${payment?.status!}`}
     >
-      <CardHeader className="border-0 border-b-2 relative flex flex-row p-2">
+      <CardHeader className="border-0 border-b-2 relative flex flex-col sm:flex-row p-2">
         <img
           src={Currency}
           width={50}
           alt="currency icon"
           className="absolute top-[1rem] left-[1rem]"
         />
-        <CardTitle className={`text-[2rem] flex-1 ${textColor}`}>
+        <CardTitle
+          data-effect="text"
+          className={`text-[2rem] flex-1 ${payment?.status!}`}
+        >
           {formatCurrency(payment?.value!)}
         </CardTitle>
         <div className="text-left opacity-80">

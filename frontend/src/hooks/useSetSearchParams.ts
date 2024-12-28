@@ -1,3 +1,4 @@
+import { validPageLimitOptions } from "@/constants";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router";
 import { useActions } from "./useActions";
@@ -12,17 +13,17 @@ export const usePersistQueryParams = (totalCount: number) => {
   const { setQueryParams } = useActions();
   const location = useLocation();
   const [_, setSearchParams] = useSearchParams();
+  const lowerLimit = Math.min(...validPageLimitOptions);
 
   React.useEffect(() => {
     const urlQuery = new URLSearchParams(location.search);
 
     let limit = parseInt(urlQuery.get("limit") || "10", 10);
-    const validPageLimitOptions = [5, 10, 15];
 
     //! revert to 10 if limit is not in valid options
     //! for example if user manually change limit to 1000 in url
     if (!validPageLimitOptions.includes(limit)) {
-      limit = 10;
+      limit = lowerLimit;
       urlQuery.set("limit", limit.toString());
       setSearchParams(urlQuery);
     }

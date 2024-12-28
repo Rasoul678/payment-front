@@ -8,7 +8,7 @@ export enum ActionType {
 
 export interface SetQueryAction {
   type: ActionType.SET_QUERY;
-  payload: Partial<QueryParams>;
+  payload: QueryParams;
 }
 
 export interface FetchPaymentsSuccessAction {
