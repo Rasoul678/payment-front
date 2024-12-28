@@ -1,6 +1,7 @@
+import { statusOptions, typeOptions } from "@/constants";
 import { useQueryChangeHandle } from "@/hooks";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
-import { PayStatusType, PayVarietyType } from "@/types";
+import { PayStatusType } from "@/types";
 import React from "react";
 import { Input } from "./shadcn-ui/input";
 import {
@@ -16,20 +17,6 @@ type IProps = {};
 const SearchBar: React.FC<IProps> = () => {
   const { query } = useTypedSelector((state) => state.payments);
   const setQueryItem = useQueryChangeHandle();
-
-  let typeOptions: PayVarietyType[] = [
-    PayVarietyType.SALARY,
-    PayVarietyType.BONUS,
-    PayVarietyType.COMMISSION,
-    PayVarietyType.TRANSPORTATION,
-    PayVarietyType.OVERTIME,
-  ];
-
-  let statusOptions: PayStatusType[] = [
-    PayStatusType.FAILED,
-    PayStatusType.SUCCESS,
-    PayStatusType.PENDING,
-  ];
 
   /**
    * Handles changes to the search input in the search bar.

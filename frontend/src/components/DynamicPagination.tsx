@@ -30,6 +30,12 @@ const DynamicPagination: React.FC<IProps> = ({ totalCount }) => {
     setQueryItem("page", page.toString());
   };
 
+  /**
+   * Renders the pagination items based on the total page count and the current page.
+   *
+   * It handles the logic for displaying the page numbers, ellipsis, and the "Previous" and "Next" buttons.
+   * The function returns an array of React nodes representing the pagination items.
+   */
   const renderPageNumbers = () => {
     const items: ReactNode[] = [];
     const maxVisiblePages = 5;
