@@ -1,4 +1,4 @@
-# Toman Frontend Project
+# Payment Frontend Project
 
 A React-based payment management system frontend that handles payment listings, details, and filtering capabilities.
 
@@ -29,13 +29,13 @@ A React-based payment management system frontend that handles payment listings, 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Rasoul678/toman-front.git
+git clone https://github.com/Rasoul678/payment-front.git
 ```
 
 2. Install dependencies:
 
 ```bash
-cd toman-front/frontend
+cd payment-front/frontend
 ```
 
 then:
@@ -54,6 +54,22 @@ yarn install
 
 ```bash
 npm run start-app
+```
+
+### With Docker
+
+1. Install Docker and Docker Compose.
+
+2. Navigate to the project directory.
+
+```bash
+cd payment-front
+```
+
+3. Run the following command to start the application:
+
+```bash
+docker-compose up
 ```
 
 ## Available Scripts
